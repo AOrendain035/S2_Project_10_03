@@ -7,7 +7,7 @@
    Author: Alexander Orendain
    Date: 1.31.19
 
-   Filename: 
+   Filename: paa_animate.css
    
    Sprite animation is created using the paa_bat.png, 
    paa_bfly.png, and paa_fox.png image files.
@@ -19,6 +19,7 @@
 */
 
 
+/* Below, I have created styles that will affect the nav and its components. The first style affects the links within the nav and gives them a relative position, a color of white, and transitions in their color after a period of 0.5s. */
 /* Transition Effects */
 nav#gameLinks a {
     position: relative;
@@ -26,10 +27,12 @@ nav#gameLinks a {
     transition: color 0.5s;
 }
 
+/* The second style gives them an orange color when the links are hover over with a mouse. */
 nav#gameLinks a:hover {
     color: rgb(255, 194, 99);
 }
 
+/* The third style has effects that take place during the hover event. These styles just basically create a gradient bar underneath the links. The gradient bars were given a position of absolute and their position was based was set with the top and left values; these values (when the position is set to absolute) are the distance that exists between the elements top/left/right/bottom edges and the top/left/etc. edges of the element's container. At first, the bars have a width of 0% and a height of 8px, but later the transition that occurs brings in the opacity and width after 0.5s; the linear gradient also comes in. */
 nav#gameLinks a::after {
     content: "";
     position: absolute;
@@ -43,43 +46,50 @@ nav#gameLinks a::after {
     transition: opacity 0.5s, width 0.5s;
 }
 
+/* After the links are hovered on, the width changes to 100% of the space and they become completely opaque. */
 nav#gameLinks a:hover::after {
     opacity: 1;
     width: 100%;
 }
 
+/* The styles below all affect the different "sprites" that are a part of the animation. The first style just gives all the divs "containing" the sprites an absolute position. This allows the elements' position to be able to be changed by inserting top and left values (what the values are was mentioned above). */
 /* Sprite Styles */
 div.sprite {
     position: absolute;
 }
 
+/* The second style directly affecs the div that will contain the bat sprite. I set its width to only be 40px and its height to be 50px so as to be scaled properly. I gave the bat div a top value of 100px and a left value of -50px; again, these values were explained above. The background of the div will contain the actual bat reel that will make the bat appear animated as the div moves past the pictures. I also linked in the animation and made it so that the playSprite animation will play over a 2 second interval with a delay of 8 seconds in steps of 39. The animation will go on infintely whilst the page is open. The second animation, flyRight, will be played over an interval of 3.5 seconds with a delay of 2 seconds linear timing and the animation will also loop indefinitely; the flyRight animation will also only be inserted into the "flying" sprites. What the animations do will be explained below.*/
 div[id="bat"] {
     width: 40px;
     height: 50px;
     top: 100px;
     left: -50px;
     background: url(paa_bat.png) left center/ cover no-repeat;
-    animation: playSprite 2s steps(39) infinite, flyRight 3.5s linear infinite;
+    animation: playSprite 2s 8s steps(39) infinite, flyRight 3.5s 2s linear infinite;
 }
 
+/* The third style affects the div that will contain the butterfly sprite. I set its width and height to both be 35px for the aforemention reason. Its top value was set to 60px and its left to -50px. The background of this div will be the butterfly reel for the same aforementioned reason. This div will contain the same animations as the first div but with slight veriations in their execution. The first animation will play after a 1 second delay and will play over a period of 3 seconds in steps of 33 infintely. The second animation will play over a period of 6 seconds and with a delay of 2 seconds with linear timining and an infinite loop. */
 div[id=butterfly] {
     width: 35px;
     height: 35px;
     top: 60px;
     left: -50px;
     background: url(paa_bfly.png) left center/ cover no-repeat;
-    animation: playSprite 1s 3s steps(33) infinite, flyRight 6s cubic-bezier(0, 1, 0.73, 0) infinite;
+    animation: playSprite 1s 3s steps(33) infinite, flyRight 6s 2s linear infinite;
+    transition: cubic-bezier(0, 1, 0.73, 0) infinite;
 }
 
+/* The fourth style affects the fox div. I set its width to 280px and its height to 260px for the same aforemention reason. I also set its bottom and right values to 10px. Its background will be the fox reel for the aforementioned reason (see the bat comment). This time, this div only has one animation, the playSprite once. It will play over a period of 3.5 second and have a delay of 4 seconds in steps of 27. It will also loop indefinitely.*/
 div[id="fox"] {
     width: 280px;
     height: 260px;
     bottom: 10px;
     right: 10px;
     background: url(paa_fox.png) left center/ cover no-repeat;
-    animation: playSprite 3.5s steps(27) 4s infinite;
+    animation: playSprite 3.5s 4s steps(27) infinite;
 }
 
+/* Below, I creaed two seperate animations, the first one is applicable to all of the sprites and the second one will only be applied to the "flying" sprites. The first animation will make the position of the background of the element on the right in the center 100% of the time. */
 /* Animation Styles */
 @keyframes playSprite {
     100% {
@@ -87,6 +97,7 @@ div[id="fox"] {
     }
 }
 
+/* The second animation has different parts that will occur at different times. This style will only be inserted into the "flying" sprites. 25% of the time, the position of the element will change as the top value is set to 150px. 50% of the time, the element's top value will change to 55px. 65% of the time, the element's top value will change to 120px. 90% of the time the element's top value will be 50px. Finaly, 100% of the time, the element's top value will go to 80px and their left to 100%. */
 @keyframes flyRight {
     25% {
         top: 150px;
